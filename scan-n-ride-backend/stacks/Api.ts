@@ -18,7 +18,12 @@ export function API({ stack }: StackContext) {
       },
     },
     routes: {
-      "POST /ticket": "packages/functions/src/ticket.create",
+      "POST /ticket": {
+        function: {
+          functionName: "create_ticket",
+          handler: "packages/functions/src/create_ticket.handler",
+        }
+      },
     },
   });
 
