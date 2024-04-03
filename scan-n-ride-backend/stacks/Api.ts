@@ -20,6 +20,7 @@ export function API({ stack }: StackContext) {
     routes: {
       "POST /ticket": "packages/functions/src/create_ticket.handler",
       "GET /vehicle/lines": "packages/functions/src/get_vehicles_lines.handler",
+      "GET /vehicle": "packages/functions/src/get_vehicles.handler",
     },
   });
 

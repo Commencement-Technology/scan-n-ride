@@ -47,3 +47,8 @@ export const getVehiclesLines = async (): Promise<string[]> => {
   return [...new Set(vehicles.map((vehicle) => vehicle.line))]
     .filter(line => line !== "None" && line !== ""); 
 }
+
+export const getVehicles = async (lines: string[]): Promise<Vehicle[]> => {
+  const vehicles = await fetchVehicles();
+  return vehicles.filter(v => lines.includes(v.line));
+}
