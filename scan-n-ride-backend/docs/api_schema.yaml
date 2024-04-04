@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: ScanNRide API
+  description: Specification of API for ScanNRide backend.
+  version: 1.0.0
+paths:
+  /ticket:
+    post:
+      summary: Create a new ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTicketRequest'
+      responses:
+        '200':
+          description: Successful ticket creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Bad request - Missing line or vehicleNumber
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Unprocessable Entity - Invalid line
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters: []
+  /vehicle/lines:
+    get:
+      summary: Get list of vehicle lines
+      responses:
+        '200':
+          description: Successful retrieval of vehicle lines
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      parameters: []
+  /vehicle:
+    get:
+      summary: Get vehicles
+      parameters:
+        - name: lines
+          in: query
+          description: Array of lines separated by commas (e.g., "N,151,10")
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful retrieval of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+        '400':
+          description: Bad request - Lines not specified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    CreateTicketRequest:
+      type: object
+      properties:
+        line:
+          type: string
+        vehicleNumber:
+          type: string
+      required:
+        - line
+        - vehicleNumber
+    Ticket:
+      type: object
+      properties:
+        uuid:
+          type: string
+        createdAt:
+          type: string
+        line:
+          type: string
+        vehicleNumber:
+          type: string
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: number
+        line:
+          type: string
+        vehicleNumber:
+          type: string
+        position:
+          $ref: '#/components/schemas/Position'
+    Position:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
