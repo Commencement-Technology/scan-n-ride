@@ -6,8 +6,8 @@ interface GetVehiclesRequest {
 }
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
-    // TODO: add some kind of validation
-    const lines = event.queryStringParameters!.lines!.split(',').filter(e => e);
+    // TODO: add some kind of validation if correct lines are specified
+    const lines = event.queryStringParameters?.lines?.split(',').filter(e => e);
     if (!lines) {
         return {
             statusCode: 400,

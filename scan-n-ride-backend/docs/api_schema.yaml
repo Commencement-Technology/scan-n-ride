@@ -12,32 +12,32 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTicketRequest'
+              $ref: "#/components/schemas/CreateTicketRequest"
       responses:
-        '200':
+        "200":
           description: Successful ticket creation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Ticket'
-        '400':
+                $ref: "#/components/schemas/Ticket"
+        "400":
           description: Bad request - Missing line or vehicleNumber
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '422':
+                $ref: "#/components/schemas/Error"
+        "422":
           description: Unprocessable Entity - Invalid line
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
       parameters: []
   /vehicle/lines:
     get:
       summary: Get list of vehicle lines
       responses:
-        '200':
+        "200":
           description: Successful retrieval of vehicle lines
           content:
             application/json:
@@ -57,22 +57,30 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Successful retrieval of vehicles
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Vehicle'
-        '400':
+                  $ref: "#/components/schemas/Vehicle"
+        "400":
           description: Bad request - Lines not specified
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
+    TicketTypeEnum:
+      type: string
+      enum:
+        - Single
+        - Time_20_Minutes
+        - Time_60_Minutes
+        - Time_6_Hours
+        - Time_Daily
     CreateTicketRequest:
       type: object
       properties:
@@ -80,9 +88,12 @@ components:
           type: string
         vehicleNumber:
           type: string
+        type:
+          $ref: '#/components/schemas/TicketTypeEnum'
       required:
         - line
         - vehicleNumber
+        - type
     Ticket:
       type: object
       properties:
@@ -90,10 +101,14 @@ components:
           type: string
         createdAt:
           type: string
+        validUntil:
+          type: string
         line:
           type: string
         vehicleNumber:
           type: string
+        type:
+          $ref: '#/components/schemas/TicketTypeEnum'
     Vehicle:
       type: object
       properties:
@@ -104,7 +119,7 @@ components:
         vehicleNumber:
           type: string
         position:
-          $ref: '#/components/schemas/Position'
+          $ref: "#/components/schemas/Position"
     Position:
       type: object
       properties:
