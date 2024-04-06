@@ -9,12 +9,21 @@ export function API({ stack }: StackContext) {
       validUntil: "string",
       type: "string",
       line: "string",
-      vehicleNumber: "string"
+      vehicleNumber: "string",
+      ownerUserSub: "string"
     },
   });
 
   const auth = new Cognito(stack, "Auth", {
     login: ["username"],
+    cdk: {
+      userPoolClient: {
+        generateSecret: false,
+        authFlows: {
+          userPassword: true
+        }
+      }
+    }
   });
 
   const api = new Api(stack, "ScanNRideApi", {
@@ -31,7 +40,7 @@ export function API({ stack }: StackContext) {
       function: {
         bind: [ticketsTable],
       },
-      authorizer: "none"
+      authorizer: "jwt"
     },
     routes: {
       "POST /ticket": "packages/functions/src/create_ticket.handler",

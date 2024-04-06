@@ -11,7 +11,22 @@ export interface Ticket {
   createdAt: string;
   validUntil: string;
   type: TicketType;
-  // TODO: owner
+  ownerUserSub: string;
   line: string;
   vehicleNumber: string;
+}
+
+export interface TicketResponse {
+  uuid: string;
+  createdAt: string;
+  validUntil: string;
+  type: TicketType;
+  line: string;
+  vehicleNumber: string;
+}
+
+export interface CreateTicketRequest {
+  line: string;
+  vehicleNumber: string;
+  type: TicketType;
 }
