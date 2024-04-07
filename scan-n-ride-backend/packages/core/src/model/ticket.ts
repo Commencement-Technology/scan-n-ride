@@ -3,7 +3,7 @@ export enum TicketType {
   Time_20_Minutes = 'Time_20_Minutes',
   Time_60_Minutes = 'Time_60_Minutes',
   Time_6_Hours = 'Time_6_Hours',
-  Time_Daily = 'Time_Daily',
+  Time_24_Hours = 'Time_24_Hours',
 }
 
 export interface Ticket {
@@ -29,4 +29,8 @@ export interface CreateTicketRequest {
   line: string;
   vehicleNumber: string;
   type: TicketType;
+}
+
+export interface GetUserTicketsRequest {
+  showExpired: boolean;
 }

@@ -19,7 +19,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Ticket"
+                $ref: "#/components/schemas/TicketResponse"
         "400":
           description: Bad request - Missing line or vehicleNumber
           content:
@@ -80,7 +80,7 @@ components:
         - Time_20_Minutes
         - Time_60_Minutes
         - Time_6_Hours
-        - Time_Daily
+        - Time_24_Hours
     CreateTicketRequest:
       type: object
       properties:
@@ -94,7 +94,7 @@ components:
         - line
         - vehicleNumber
         - type
-    Ticket:
+    TicketResponse:
       type: object
       properties:
         uuid:

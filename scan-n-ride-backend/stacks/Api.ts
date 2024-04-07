@@ -44,6 +44,7 @@ export function API({ stack }: StackContext) {
     },
     routes: {
       "POST /ticket": "packages/functions/src/create_ticket.handler",
+      "GET /ticket": "packages/functions/src/get_user_tickets.handler",
       "GET /vehicle/lines": {
         function: "packages/functions/src/get_vehicles_lines.handler",
         authorizer: "none"
