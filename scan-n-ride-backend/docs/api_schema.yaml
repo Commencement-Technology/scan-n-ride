@@ -5,6 +5,25 @@ info:
   version: 1.0.0
 paths:
   /ticket:
+    get:
+      summary: Get list of authorized user tickets
+      parameters:
+        - name: showExpired
+          in: query
+          description: Show expired tickets
+          required: true
+          schema:
+            type: boolean
+          example: true
+      responses:
+        "200":
+          description: Successful retrieval of tickets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TicketResponse"
     post:
       summary: Create a new ticket
       requestBody:
