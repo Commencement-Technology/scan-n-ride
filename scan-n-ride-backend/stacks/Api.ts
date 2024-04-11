@@ -50,7 +50,7 @@ export function API({ stack }: StackContext) {
         authorizer: "none"
       },
       "GET /vehicle": {
-        function: "packages/functions/src/get_vehicles_lines.handler",
+        function: "packages/functions/src/get_vehicles.handler",
         authorizer: "none"
       },
     },

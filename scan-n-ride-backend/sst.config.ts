@@ -4,8 +4,8 @@ import { API } from "./stacks/Api";
 export default {
   config(_input) {
     return {
-      name: "scan-n-ride-backend",
-      region: "us-east-1",
+      name: "scan-n-ride",
+      region: "eu-central-1",
     };
   },
   stacks(app) {
