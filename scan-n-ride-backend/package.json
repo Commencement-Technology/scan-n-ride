@@ -11,7 +11,8 @@
     "remove": "sst remove",
     "remove:prod": "sst remove --stage prod",
     "console": "sst console",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "sst bind vitest run"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
