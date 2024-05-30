@@ -1,6 +1,6 @@
 import { Api, Cognito, StackContext, Table } from "sst/constructs";
 
-export function API({ stack }: StackContext) {
+export function API({ stack, app }: StackContext) {
   const ticketsTable = new Table(stack, "Tickets", {
     primaryIndex: { partitionKey: "uuid", sortKey: "createdAt" },
     fields: {
@@ -21,10 +21,19 @@ export function API({ stack }: StackContext) {
         generateSecret: false,
         authFlows: {
           userPassword: true
+        },
+        oAuth: {
+          callbackUrls: ["http://localhost:8081/auth", "http://localhost:8081"]
         }
       }
     }
   });
+
+  const cognitoDomain = auth.cdk.userPool.addDomain("AuthDomain", {
+    cognitoDomain: {
+      domainPrefix: `${app.stage}-scan-n-ride`
+    }
+  })
 
   const api = new Api(stack, "ScanNRideApi", {
     authorizers: {
