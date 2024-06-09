@@ -1,37 +1,54 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import VehicleMap from './VehicleMap';
+import TicketList from './TicketList';
+import AuthScreen from './auth';
+import BuyTicketScreen from './BuyTicket';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+const Tab = createBottomTabNavigator();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+
+    <Tab.Navigator>
+      <Tab.Screen 
+        name="VehicleMap" 
+        component={VehicleMap} 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="map-marked-alt" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="TicketList" 
+        component={TicketList} 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="list" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="auth" 
+        component={AuthScreen} 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="user" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="BuyTicket" 
+        component={BuyTicketScreen} 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="ticket-alt" size={size} color={color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+    
   );
-}
+};
